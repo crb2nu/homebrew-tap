@@ -23,6 +23,7 @@ jobs:
       - name: install checkout as a tap
         env:
           HOMEBREW_NO_AUTO_UPDATE: "1"
+          HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
         run: |
           brew tap crb2nu/tap "file://$GITHUB_WORKSPACE"
           brew style --cask crb2nu/tap/edilint
