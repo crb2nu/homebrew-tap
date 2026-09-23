@@ -28,7 +28,9 @@ jobs:
           brew style --cask crb2nu/tap/edilint
           brew audit --cask --online crb2nu/tap/edilint
           brew install --cask crb2nu/tap/edilint
-          edilint --version
-          printf 'ABC|one\n' | edilint --no-config --format text --json - > report.json
+          cask_version="$(brew info --cask --json=v2 crb2nu/tap/edilint | python3 -c 'import json, sys; print(json.load(sys.stdin)["casks"][0]["version"])')"
+          installed_version="$("$(brew --prefix)/bin/edilint" --version)"
+          test "$installed_version" = "edilint $cask_version"
+          printf 'ABC|one\n' | "$(brew --prefix)/bin/edilint" --no-config --format text --json - > report.json
           python3 -c 'import json; r=json.load(open("report.json")); assert r["summary"]["total"] == 0, r'
           brew uninstall --cask edilint
