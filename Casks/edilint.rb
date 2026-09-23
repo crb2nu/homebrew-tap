@@ -13,7 +13,6 @@ cask "edilint" do
       url "https://github.com/crb2nu/edilint/releases/download/v#{version}/edilint_#{version}_darwin_amd64.tar.gz"
     end
   end
-
   on_linux do
     on_arm do
       sha256 "a0b59a7e19b5cf3cad96cf9be99897cc596ef0fdbc9723a71826217212399e88"
