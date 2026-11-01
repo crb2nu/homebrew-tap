@@ -26,6 +26,14 @@ jobs:
           HOMEBREW_GITHUB_API_TOKEN: ${{ github.token }}
         run: |
           brew tap crb2nu/tap "file://$GITHUB_WORKSPACE"
+          # Homebrew 6 loads a non-official tap's cask for audit and info only
+          # once it is trusted (docs/Tap-Trust.md). Trust the one cask, as the
+          # docs prefer, rather than the whole tap. A fully qualified
+          # `brew install --cask crb2nu/tap/edilint` trusts the item by itself,
+          # so users need no extra step. Older Homebrew has no trust command.
+          if brew help trust >/dev/null 2>&1; then
+            brew trust --cask crb2nu/tap/edilint
+          fi
           brew style --cask crb2nu/tap/edilint
           brew audit --cask --online crb2nu/tap/edilint
           brew install --cask crb2nu/tap/edilint
